@@ -14,7 +14,7 @@
 
 ## Introduction
 
-This packages make the [weew/php-router](https://github.com/weew/php-router) configurable trough config files or arrays. It is recommended to use the [weew/php-config](https://github.com/weew/php-config) package for the loading of config files.
+This package makes the [weew/php-router](https://github.com/weew/php-router) configurable trough config files or arrays. It is recommended to use the [weew/php-config](https://github.com/weew/php-config) package for the loading of config files.
 
 ## Usage
 
@@ -44,7 +44,7 @@ host: foo.com
 groups:
     # name is for readability only
     - name: public
-      # same as $rotuer->setController(HomeController::class)
+      # same as $router->setController(HomeController::class)
       controller: HomeController
       routes:
         # same as $router->get('/', 'homeAction')
