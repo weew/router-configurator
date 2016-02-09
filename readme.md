@@ -48,9 +48,13 @@ groups:
       controller: HomeController
       routes:
         # same as $router->get('/', 'homeAction')
-        - method: GET, path: /, action: homeAction
+        - method: GET,
+          path: /,
+          action: homeAction
         # same as $router->route(['GET', 'POST'], 'contactAction')
-        - method: [GET, POST], path: contact, action: contactAction
+        - method: [GET, POST],
+          path: contact,
+          action: contactAction
 
     - name: api
       # same as $router->enableFilter('auth')
@@ -63,8 +67,12 @@ groups:
          controller: Foo\Bar\UserController
          prefix: /users
          routes:
-           - route: GET /, action: list
-           - route: POST /, action create,
-           - rotue: GET {user}, action: show
-           - route: PUT {user}, action: update
+           - route: GET /,
+             action: list
+           - route: POST /,
+             action create,
+           - rotue: GET {user},
+             action: show
+           - route: PUT {user},
+             action: update
 ```
