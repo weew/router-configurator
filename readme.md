@@ -23,11 +23,13 @@ In this example I'll be using a configuration written in yaml:
 ```yaml
 # same as $router->addFilter('auth', [AuthFilter::class, 'filter');
 filters:
-    - name: auth, filter: [Foo\Bar\AuthFilter, filter]
+    - name: auth
+      filter: [Foo\Bar\AuthFilter, filter]
 
 # same as $router->addResolver('user', [UserResolver::class, 'resolve');
 resolvers:
-    - name: user, resolver: [Foo\Bar\UserResolver, resolve]
+    - name: user
+      resolver: [Foo\Bar\UserResolver, resolve]
 
 # same as $router->restrictProtocol(['http', 'https'])
 protocol: [http, https]
@@ -70,7 +72,7 @@ groups:
            - route: GET /,
              action: list
            - route: POST /,
-             action create,
+             action: create,
            - rotue: GET {user},
              action: show
            - route: PUT {user},
