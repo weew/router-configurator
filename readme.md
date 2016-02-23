@@ -50,12 +50,12 @@ groups:
       controller: HomeController
       routes:
         # same as $router->get('/', 'homeAction')
-        - method: GET,
-          path: /,
+        - method: GET
+          path: /
           action: homeAction
         # same as $router->route(['GET', 'POST'], 'contactAction')
-        - method: [GET, POST],
-          path: contact,
+        - method: [GET, POST]
+          path: contact
           action: contactAction
 
     - name: api
@@ -69,12 +69,11 @@ groups:
          controller: Foo\Bar\UserController
          prefix: /users
          routes:
-           - route: GET /,
+           - route: GET /
              action: list
-           - route: POST /,
-             action: create,
-           - rotue: GET {user},
+           - route: POST /
+             action: create
+           - rotue: GET {user}
              action: show
-           - route: PUT {user},
-             action: update
+           - route: PUT PATCH {user} update
 ```
