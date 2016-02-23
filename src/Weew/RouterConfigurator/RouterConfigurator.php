@@ -2,6 +2,7 @@
 
 namespace Weew\RouterConfigurator;
 
+use Weew\Http\HttpRequestMethod;
 use Weew\Router\IRouter;
 use Weew\RouterConfigurator\Exception\InvalidConfigurationException;
 
@@ -245,25 +246,45 @@ class RouterConfigurator implements IRouterConfigurator {
      * @return array
      */
     protected function gatherRouteFacts(array $definition) {
-        $action = array_get($definition, 'action');
         $route = array_get($definition, 'route');
+        $method = null;
+        $path = null;
+        $action = null;
 
         // routes is expected to be in format like:
-        // GET POST /some/path
+        // GET POST /some/path someAction
         if (is_string($route)) {
             $parts = preg_split('/\s+/', $route);
             $parts = array_map('trim', $parts);
 
-            if (count($parts) >= 2) {
-                $path = array_pop($parts);
-                $method = $parts;
-
-                return [$method, $path, $action];
+            foreach ($parts as $part) {
+                if (HttpRequestMethod::isValid($part)) {
+                    if ($method === null) {
+                        $method = $part;
+                    } else if ( ! is_array($method)) {
+                        $method = [$method, $part];
+                    } else {
+                        $method[] = $part;
+                    }
+                } else if ($path === null) {
+                    $path = $part;
+                } else if ($action === null) {
+                    $action = $part;
+                }
             }
         }
 
-        $method = array_get($definition, 'method');
-        $path = array_get($definition, 'path');
+        if ($method === null) {
+            $method = array_get($definition, 'method');
+        }
+
+        if ($path === null) {
+            $path = array_get($definition, 'path');
+        }
+
+        if ($action === null) {
+            $action = array_get($definition, 'action');
+        }
 
         return [$method, $path, $action];
     }

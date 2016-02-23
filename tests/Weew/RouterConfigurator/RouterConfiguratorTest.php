@@ -218,19 +218,70 @@ class RouterConfiguratorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(['GET', 'POST'], $method);
         $this->assertEquals('/foo/bar', $path);
         $this->assertEquals('yolo', $action);
+
+        $definition = [
+            'route' => 'GET   POST    /foo/bar     yolo',
+        ];
+        $configurator = $this->createConfigurator();
+
+        list($method, $path, $action) = $configurator->gatherRouteFacts($definition);
+        $this->assertEquals(['GET', 'POST'], $method);
+        $this->assertEquals('/foo/bar', $path);
+        $this->assertEquals('yolo', $action);
     }
 
     public function test_gather_route_facts_from_incomplete_route_definition() {
         $definition = [
-            'route' => '/foo/bar',
-            'action' => 'yolo',
+            'route' => '/foo/bar yoloAction',
         ];
         $configurator = $this->createConfigurator();
 
         list($method, $path, $action) = $configurator->gatherRouteFacts($definition);
         $this->assertEquals(null, $method);
-        $this->assertEquals(null, $path);
-        $this->assertEquals('yolo', $action);
+        $this->assertEquals('/foo/bar', $path);
+        $this->assertEquals('yoloAction', $action);
+    }
+
+    public function test_gather_route_facts_from_route_definition_with_path() {
+        $definition = [
+            'method' => 'GET',
+            'route' => '/foo/bar',
+            'action' => 'baz'
+        ];
+        $configurator = $this->createConfigurator();
+
+        list($method, $path, $action) = $configurator->gatherRouteFacts($definition);
+        $this->assertEquals('GET', $method);
+        $this->assertEquals('/foo/bar', $path);
+        $this->assertEquals('baz', $action);
+    }
+
+    public function test_gather_route_facts_from_route_definition_with_path_and_method() {
+        $definition = [
+            'method' => 'GET',
+            'route' => 'GET POST DELETE /foo/bar',
+            'action' => 'baz'
+        ];
+        $configurator = $this->createConfigurator();
+
+        list($method, $path, $action) = $configurator->gatherRouteFacts($definition);
+        $this->assertEquals(['GET', 'POST', 'DELETE'], $method);
+        $this->assertEquals('/foo/bar', $path);
+        $this->assertEquals('baz', $action);
+    }
+
+    public function test_gather_route_facts_from_route_definition_with_path_and_method_action() {
+        $definition = [
+            'method' => 'GET',
+            'route' => 'GET POST /foo/bar action',
+            'action' => 'baz'
+        ];
+        $configurator = $this->createConfigurator();
+
+        list($method, $path, $action) = $configurator->gatherRouteFacts($definition);
+        $this->assertEquals(['GET', 'POST'], $method);
+        $this->assertEquals('/foo/bar', $path);
+        $this->assertEquals('action', $action);
     }
 
     public function test_gather_route_facts_from_regular_definition() {
