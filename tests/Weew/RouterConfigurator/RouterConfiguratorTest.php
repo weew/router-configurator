@@ -6,6 +6,7 @@ use PHPUnit_Framework_TestCase;
 use Tests\Weew\RouterConfigurator\Mocks\Router;
 use Tests\Weew\RouterConfigurator\Mocks\RouterConfigurator;
 use Weew\Config\Config;
+use Weew\Router\IRouteFilter;
 use Weew\RouterConfigurator\Exception\InvalidConfigurationException;
 
 class RouterConfiguratorTest extends PHPUnit_Framework_TestCase {
@@ -74,6 +75,21 @@ class RouterConfiguratorTest extends PHPUnit_Framework_TestCase {
 
         $this->setExpectedException(InvalidConfigurationException::class);
         $configurator->processFilters($router, $config);
+    }
+
+    public function test_process_enabled_filters() {
+        $router = $this->createRouter();
+        $configurator = $this->createConfigurator();
+        $config = ['filter' => 'auth'];
+
+        $router->addFilter('auth', [$this, 'test_process_enabled_filters']);
+
+        $configurator->processEnabledFilters($router, $config);
+        $filters = $router->getRoutesMatcher()->getFiltersMatcher()->getFilters();
+        $this->assertEquals(1, count($filters));
+        /** @var IRouteFilter $filter */
+        $filter = array_pop($filters);
+        $this->assertTrue($filter->isEnabled());
     }
 
     public function test_process_resolvers() {
@@ -416,6 +432,7 @@ class RouterConfiguratorTest extends PHPUnit_Framework_TestCase {
             'groups' => [
                 [
                     'controller' => 'AnotherController',
+                    'filter' => ['filter'],
                     'routes' => [
                         ['route' => 'POST PUT /bar', 'action' => 'bar']
                     ]
@@ -462,5 +479,10 @@ class RouterConfiguratorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(['POST', 'PUT'], $route->getMethods());
         $this->assertEquals('/v1/bar', $route->getPath());
         $this->assertEquals(['AnotherController', 'bar'], $route->getAction());
+        $filters = $router->getRoutesMatcher()->getFiltersMatcher()->getFilters();
+        $this->assertEquals(1, count($filters));
+        /** @var IRouteFilter $filter */
+        $filter = array_pop($filters);
+        $this->assertTrue($filter->isEnabled());
     }
 }

@@ -10,6 +10,10 @@ class RouterConfigurator extends BaseRouterConfigurator {
         parent::processFilters($router, $config);
     }
 
+    public function processEnabledFilters(IRouter $router, array $config) {
+        parent::processEnabledFilters($router, $config);
+    }
+
     public function processResolvers(IRouter $router, array $config) {
         parent::processResolvers($router, $config);
     }

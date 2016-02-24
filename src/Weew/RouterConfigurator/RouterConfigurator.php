@@ -13,6 +13,7 @@ class RouterConfigurator implements IRouterConfigurator {
      */
     public function processConfig(IRouter $router, array $config) {
         $this->processFilters($router, $config);
+        $this->processEnabledFilters($router, $config);
         $this->processResolvers($router, $config);
         $this->processPrefix($router, $config);
         $this->processProtocol($router, $config);
@@ -57,6 +58,22 @@ class RouterConfigurator implements IRouterConfigurator {
             }
 
             $router->addFilter($name, $handler);
+        }
+    }
+
+    /**
+     * @param IRouter $router
+     * @param array $config
+     */
+    protected function processEnabledFilters(IRouter $router, array $config) {
+        $filters = array_get($config, 'filter', []);
+
+        if ( ! is_array($filters)) {
+            $filters = [$filters];
+        }
+
+        foreach ($filters as $filter) {
+            $router->enableFilter($filter);
         }
     }
 
