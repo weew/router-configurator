@@ -120,7 +120,7 @@ class RouterConfigurator implements IRouterConfigurator {
         $prefix = array_get($config, 'prefix');
 
         if ( ! empty($prefix)) {
-            $router->setPrefix($prefix);
+            $router->addPrefix($prefix);
         }
     }
 

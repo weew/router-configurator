@@ -61,7 +61,7 @@ groups:
     - name: api
       # same as $router->enableFilter('auth')
       filter: auth
-      # same as $router->setPrefix('api/v1')
+      # same as $router->addPrefix('api/v1')
       prefix: api/v1
 
       groups:
