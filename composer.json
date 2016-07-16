@@ -1,6 +1,6 @@
 {
-    "name": "weew/php-router-configurator",
-    "description": "Makes weew/php-router configurable trough config files.",
+    "name": "weew/router-configurator",
+    "description": "Makes weew/router configurable trough config files.",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
         }
     },
     "require": {
-        "weew/php-router": "^2.2"
+        "weew/router": "^2.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7",

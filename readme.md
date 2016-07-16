@@ -1,20 +1,20 @@
 # Router configurator
 
-[![Build Status](https://img.shields.io/travis/weew/php-router-configurator.svg)](https://travis-ci.org/weew/php-router-configurator)
-[![Code Quality](https://img.shields.io/scrutinizer/g/weew/php-router-configurator.svg)](https://scrutinizer-ci.com/g/weew/php-router-configurator)
-[![Test Coverage](https://img.shields.io/coveralls/weew/php-router-configurator.svg)](https://coveralls.io/github/weew/php-router-configurator)
-[![Version](https://img.shields.io/packagist/v/weew/php-router-configurator.svg)](https://packagist.org/packages/weew/php-router-configurator)
-[![Licence](https://img.shields.io/packagist/l/weew/php-router-configurator.svg)](https://packagist.org/packages/weew/php-router-configurator)
+[![Build Status](https://img.shields.io/travis/weew/router-configurator.svg)](https://travis-ci.org/weew/router-configurator)
+[![Code Quality](https://img.shields.io/scrutinizer/g/weew/router-configurator.svg)](https://scrutinizer-ci.com/g/weew/router-configurator)
+[![Test Coverage](https://img.shields.io/coveralls/weew/router-configurator.svg)](https://coveralls.io/github/weew/router-configurator)
+[![Version](https://img.shields.io/packagist/v/weew/router-configurator.svg)](https://packagist.org/packages/weew/router-configurator)
+[![Licence](https://img.shields.io/packagist/l/weew/router-configurator.svg)](https://packagist.org/packages/weew/router-configurator)
 
 ## Table of contents
 
 ## Installation
 
-`composer require weew/php-router-configurator`
+`composer require weew/router-configurator`
 
 ## Introduction
 
-This package makes the [weew/php-router](https://github.com/weew/php-router) configurable trough config files or arrays. It is recommended to use the [weew/php-config](https://github.com/weew/php-config) package for the loading of config files.
+This package makes the [weew/router](https://github.com/weew/router) configurable trough config files or arrays. It is recommended to use the [weew/config](https://github.com/weew/config) package for the loading of config files.
 
 ## Usage
 
