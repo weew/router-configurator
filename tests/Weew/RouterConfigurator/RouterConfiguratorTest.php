@@ -6,6 +6,7 @@ use PHPUnit_Framework_TestCase;
 use Tests\Weew\RouterConfigurator\Mocks\Router;
 use Tests\Weew\RouterConfigurator\Mocks\RouterConfigurator;
 use Weew\Config\Config;
+use Weew\Http\HttpRequestMethod;
 use Weew\Router\IRouteFilter;
 use Weew\RouterConfigurator\Exception\InvalidConfigurationException;
 
@@ -300,6 +301,19 @@ class RouterConfiguratorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('action', $action);
     }
 
+    public function test_it_detect_any_route_inside_route_definition() {
+        $definition = [
+            'route' => 'ANY /foo/bar action',
+            'action' => 'baz'
+        ];
+        $configurator = $this->createConfigurator();
+
+        list($method, $path, $action) = $configurator->gatherRouteFacts($definition);
+        $this->assertEquals(HttpRequestMethod::getMethods(), $method);
+        $this->assertEquals('/foo/bar', $path);
+        $this->assertEquals('action', $action);
+    }
+
     public function test_gather_route_facts_from_regular_definition() {
         $definition = [
             'method' => ['GET', 'POST'],
@@ -310,6 +324,20 @@ class RouterConfiguratorTest extends PHPUnit_Framework_TestCase {
 
         list($method, $path, $action) = $configurator->gatherRouteFacts($definition);
         $this->assertEquals(['GET', 'POST'], $method);
+        $this->assertEquals('/foo/bar', $path);
+        $this->assertEquals('yolo', $action);
+    }
+
+    public function test_it_detect_any_route_inside_regular_definition() {
+        $definition = [
+            'method' => ['ANY'],
+            'path' => '/foo/bar',
+            'action' => 'yolo',
+        ];
+        $configurator = $this->createConfigurator();
+
+        list($method, $path, $action) = $configurator->gatherRouteFacts($definition);
+        $this->assertEquals(HttpRequestMethod::getMethods(), $method);
         $this->assertEquals('/foo/bar', $path);
         $this->assertEquals('yolo', $action);
     }

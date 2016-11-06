@@ -275,7 +275,7 @@ class RouterConfigurator implements IRouterConfigurator {
             $parts = array_map('trim', $parts);
 
             foreach ($parts as $part) {
-                if (HttpRequestMethod::isValid($part)) {
+                if (HttpRequestMethod::isValid($part) || $part === 'ANY') {
                     if ($method === null) {
                         $method = $part;
                     } else if ( ! is_array($method)) {
@@ -293,6 +293,10 @@ class RouterConfigurator implements IRouterConfigurator {
 
         if ($method === null) {
             $method = array_get($definition, 'method');
+        }
+
+        if ($method === 'ANY' || (is_array($method) && array_contains($method, 'ANY'))) {
+            $method = HttpRequestMethod::getMethods();
         }
 
         if ($path === null) {
